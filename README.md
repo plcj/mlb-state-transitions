@@ -15,7 +15,7 @@ gst.py are the start of this.
 Something along these lines, possibly:
 
 B4 (bottom of the 4th)
-
+```
 0000    x   x   .   .
 0003        .   .   .
 0020        .   x   .
@@ -27,7 +27,7 @@ B4 (bottom of the 4th)
 1000        .   .   .
 ...
 3000                .
-
+```
 Rows show states, columns show which are possible from that state (.) and which occured (x). Blanks were not possible.
 
 Events creating the above example might be: leadoff man HR, second batter doubles, third batter walks.
