@@ -1,0 +1,7 @@
+#!/bin/bash
+#
+# The Event Type field is the 8th field in a .s file (zero-indexed).
+# cut numbers fields from 1.
+# Event Type 24 is "Missing Play".
+
+cat 2000_-_2013.s | cut -d, -f9 | grep 24$ | wc -l

@@ -1,0 +1,48 @@
+#!/bin/bash
+#
+# bsapp
+# bsa pre-processing
+# by Luke Jordan
+#
+# Version 1.1	2014 May 18
+#	Renamed from bsaprep, improved comments
+#	Written with and known to work with bevent version 119(185)
+#	So far no issues with bevent version 120(187)
+# Version 1.0	2013 Oct 29
+#	Initial version
+#
+# Given .EVA and .EVN files, bsapp creates .s files suitable for input to
+# bsa programs s2gs, and s2hl.
+#
+# USAGE
+#
+# 	bsapp y1 y2
+#
+# where y2 >= y1 and they are years in YYYY format. E.g.
+#
+#	bsapp 1950 1959
+#
+# runs the bevent command specified below for every .EVA and .EVN file
+# from the years 1950 through 1959 that exists in the current directory and
+# moves them into directories, one for each year. 
+#
+# To run it for one year only you must still provide two parameters
+# (the same year twice).
+#
+# Re: bevent fields 8-9
+# They are not used by bsa programs, but leaving them out crashes bevent.
+# whittle.py strips those fields before they are processed by bsa programs.
+
+for y in $(eval echo {"$1".."$2"}); do (
+	for f in "$y"*.EV*; do (
+		./bevent -y "$y" -f 0,2-4,8-9,26-29,34,40,78-79 "$f" > "$f".s
+	); done
+	
+	cat "$y"*EV*.s >> "$y".s
+	cat "$y"*EVA.s >> "$y"A.s
+	cat "$y"*EVN.s >> "$y"N.s
+
+	mkdir "$y"_bsa_source
+	mv *.s "$y"_bsa_source
+); done
+
